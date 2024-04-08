@@ -1,0 +1,238 @@
+def image_tag = ""
+
+pipeline {
+  agent none
+
+  stages {
+    stage('Initiate Build') {
+      agent {
+        node { 
+          label 'sonar'
+        } 
+      }
+      steps {
+        sh ''' echo "Build started" '''
+      }
+      post {
+                success {
+                    script {
+                        def USER = wrap([$class: 'BuildUser']) {
+                            return env.BUILD_USER
+                        }
+                        def slackMessage = "Marketrix-dashboard-v2 build started \n Build started by: ${USER}"
+                        
+                        slackSend(
+                            channel: '#devops-operations',
+                            color: 'good',
+                            message: slackMessage,
+                        )
+                    }
+                }
+            }
+    }
+
+    stage('Reading the Version') {
+      agent {
+        node { 
+          label 'sonar'
+        } 
+      }
+      steps {
+        script {
+            FAILED_STAGE=env.STAGE_NAME
+            image_tag = sh(script: '''cat version.yml | grep -oP "version:\\s*'\\K[^']+"''', returnStdout: true).trim()
+        }
+      }
+    }
+
+    stage('Build Docker Image') {
+      agent {
+        node { 
+          label 'sonar'
+        } 
+      }
+      steps {
+        script {
+          FAILED_STAGE=env.STAGE_NAME
+          withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
+            docker.withRegistry("https://registry.hub.docker.com/v2/", 'dockerhub') {
+              def dockerImage = docker.build("creativehubglobal/marketrix-dashboard-v2-prod:${image_tag}", "--file Dockerfile-prod .")
+              dockerImage.push()
+            }
+          }
+        }
+      }
+    }
+
+    stage('Post-Build') {
+      agent {
+        node { 
+          label 'sonar'
+        } 
+      }
+      steps {
+        script {
+            FAILED_STAGE=env.STAGE_NAME
+        }
+        sh '''docker image prune --filter "dangling=true" --force'''
+        sh "docker rmi -f registry.hub.docker.com/creativehubglobal/marketrix-dashboard-v2-prod:${image_tag}"
+        sh "docker rmi -f creativehubglobal/marketrix-dashboard-v2-prod:${image_tag}"
+      }
+    }
+
+    stage('Clearing the workspace - Build') {
+      agent {
+        node { 
+          label 'sonar'
+        } 
+      }
+      steps {
+        script {
+          deleteDir()
+          dir("${env.WORKSPACE}@tmp") {
+            deleteDir()
+          }
+          dir("${env.WORKSPACE}@script") {
+            deleteDir()
+          }
+          dir("${env.WORKSPACE}@script@tmp") {
+            deleteDir()
+          }
+        }
+      }
+    }
+
+    stage('Saving Backup') {
+      agent {
+        node { 
+          label 'prod'
+        } 
+      }
+      steps {
+        script {
+            FAILED_STAGE=env.STAGE_NAME
+        }
+        sh '''docker tag creativehubglobal/marketrix-dashboard-v2-prod:latest creativehubglobal/marketrix-dashboard-v2-prod:old'''
+      }
+    }
+    stage('Build') {
+      agent {
+        node { 
+          label 'prod'
+        } 
+      }
+      steps {
+        script {
+            FAILED_STAGE=env.STAGE_NAME
+        }
+        sh "docker pull creativehubglobal/marketrix-dashboard-v2-prod:${image_tag}"
+        sh "docker tag creativehubglobal/marketrix-dashboard-v2-prod:${image_tag} creativehubglobal/marketrix-dashboard-v2-prod:latest"
+      }
+    }
+
+    stage('Tests') {
+      agent {
+        node { 
+          label 'prod'
+        } 
+      }
+      steps {
+        echo 'no automated tests'
+      }
+    }
+
+    stage('Pre-Deployment') {
+      agent {
+        node { 
+          label 'prod'
+        } 
+      }
+      steps {
+        script {
+            FAILED_STAGE=env.STAGE_NAME
+        }
+        sh '''docker stop marketrix-dash-v2-prod
+        docker rm marketrix-dash-v2-prod
+        docker volume rm marketrix-dash-v2-prod_data
+        docker image prune --filter "dangling=true" --force'''
+      }
+    }
+
+    stage('Deploy') {
+      agent {
+        node { 
+          label 'prod'
+        } 
+      }
+      steps {
+        script {
+            FAILED_STAGE=env.STAGE_NAME
+        }
+        sh '''
+        docker-compose -f compose-prod.yml up -d --force-recreate
+        docker restart marketrix-dash-v2-prod'''
+      }
+
+    }
+    stage('Post-Deployment') {
+      agent {
+        node { 
+          label 'prod'
+        } 
+      }
+      steps {
+        script {
+            FAILED_STAGE=env.STAGE_NAME
+        }
+        sh "docker rmi creativehubglobal/marketrix-dashboard-v2-prod:${image_tag}"
+      }
+    }
+
+    stage('Clearing the workspace - Deployment') {
+      agent {
+        node { 
+          label 'prod'
+        } 
+      }
+      steps {
+        script {
+          deleteDir()
+          dir("${env.WORKSPACE}@tmp") {
+            deleteDir()
+          }
+          dir("${env.WORKSPACE}@script") {
+            deleteDir()
+          }
+          dir("${env.WORKSPACE}@script@tmp") {
+            deleteDir()
+          }
+        }
+      }
+    }
+  }
+  post {
+        success {
+            script {
+                def slackMessage = "Marketrix-dashboard-v2 build finished :heavy_check_mark:"
+                        
+                slackSend(
+                    channel: '#devops-operations',
+                    color: 'good',
+                    message: slackMessage,
+                )
+            }
+        }
+        failure {
+            script {
+                def slackMessage = "Marketrix-dashboard-v2 build failed :x:\n Build failed at: ${FAILED_STAGE}"
+                
+                slackSend(
+                    channel: '#devops-operations',
+                    color: 'danger',
+                    message: slackMessage,
+                )
+            }
+        }
+    }
+  
+}

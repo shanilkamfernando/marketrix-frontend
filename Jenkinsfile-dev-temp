@@ -1,0 +1,134 @@
+pipeline {
+  agent none
+
+  stages {
+    stage('Build Docker Image') {
+      agent {
+        node { 
+          label 'sonar'
+        } 
+      }
+      steps {
+        script {
+          withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'HUB_USER', passwordVariable: 'HUB_PASS')]) {
+            docker.withRegistry("https://registry.hub.docker.com/v2/", 'dockerhub') {
+              def dockerImage = docker.build("creativehubglobal/marketrix-dashboard-temp:latest", "--file Dockerfile-dev --no-cache .")
+              dockerImage.push()
+            }
+          }
+        }
+      }
+    }
+
+    stage('Post-Build') {
+      agent {
+        node { 
+          label 'sonar'
+        } 
+      }
+      steps {
+        sh '''
+        docker image prune --filter "dangling=true" --force
+        docker rmi -f registry.hub.docker.com/creativehubglobal/marketrix-dashboard-temp:latest
+        docker rmi -f creativehubglobal/marketrix-dashboard-temp:latest
+        '''
+      }
+    }
+
+    stage('Clearing the workspace - Build') {
+      agent {
+        node { 
+          label 'sonar'
+        } 
+      }
+      steps {
+        script {
+          deleteDir()
+          dir("${env.WORKSPACE}@tmp") {
+            deleteDir()
+          }
+          dir("${env.WORKSPACE}@script") {
+            deleteDir()
+          }
+          dir("${env.WORKSPACE}@script@tmp") {
+            deleteDir()
+          }
+        }
+      }
+    }
+
+    
+    stage('Build') {
+      agent {
+        node { 
+          label 'dev'
+        } 
+      }
+      steps {
+        sh '''docker pull creativehubglobal/marketrix-dashboard-temp:latest'''
+      }
+    }
+
+    stage('Tests') {
+      agent {
+        node { 
+          label 'dev'
+        } 
+      }
+      steps {
+        echo 'no automated tests'
+      }
+    }
+
+    stage('Pre-Deployment') {
+      agent {
+        node { 
+          label 'dev'
+        } 
+      }
+      steps {
+        sh '''docker stop marketrix-dashboard-temp
+        docker rm marketrix-dashboard-temp
+        docker volume rm marketrix-dash-temp_data
+        docker image prune --filter "dangling=true" --force'''
+      }
+    }
+
+    stage('Deploy') {
+      agent {
+        node { 
+          label 'dev'
+        } 
+      }
+      steps {
+        sh '''
+        docker-compose -f compose-temp.yml up -d --force-recreate
+        docker restart marketrix-dashboard-temp'''
+      }
+
+    }
+
+    stage('Clearing the workspace - Deployment') {
+      agent {
+        node { 
+          label 'dev'
+        } 
+      }
+      steps {
+        script {
+          deleteDir()
+          dir("${env.WORKSPACE}@tmp") {
+            deleteDir()
+          }
+          dir("${env.WORKSPACE}@script") {
+            deleteDir()
+          }
+          dir("${env.WORKSPACE}@script@tmp") {
+            deleteDir()
+          }
+        }
+      }
+    }
+  }
+  
+}

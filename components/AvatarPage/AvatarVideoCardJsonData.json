@@ -1,0 +1,36 @@
+{
+  "avatars": [
+    {
+      "avatarImg": "/images/ai/avatar01.png",
+      "avatarTitle": "Demo Avatar 01"
+    },
+    {
+      "avatarImg": "/images/ai/avatar02.png",
+      "avatarTitle": "Demo Avatar 02"
+    },
+    {
+      "avatarImg": "/images/ai/avatar03.png",
+      "avatarTitle": "Demo Avatar 03"
+    },
+    {
+      "avatarImg": "/images/ai/avatar04.png",
+      "avatarTitle": "Demo Avatar 04"
+    },
+    {
+      "avatarImg": "/images/ai/avatar05.png",
+      "avatarTitle": "Demo Avatar 05"
+    },
+    {
+      "avatarImg": "/images/ai/avatar06.png",
+      "avatarTitle": "Demo Avatar 06"
+    },
+    {
+      "avatarImg": "/images/ai/avatar06.png",
+      "avatarTitle": "Demo Avatar 06"
+    },
+    {
+      "avatarImg": "/images/ai/avatar06.png",
+      "avatarTitle": "Demo Avatar 06"
+    }
+  ]
+}

@@ -1,0 +1,340 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* :root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+} */
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  display: block !important;
+}
+/* ---------------------------------------GLOBAL COLORS------------------------------------------------ */
+
+@font-face {
+  font-family: "Inter";
+  src: url("../public/fonts/Inter-Regular.otf");
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter-Medium";
+  src: url("../public/fonts/Inter-Medium.otf");
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter-Bold";
+  src: url("../public/fonts/Inter-Bold.otf");
+  font-style: normal;
+}
+
+.Inter {
+  font-family: "Inter";
+}
+
+.Inter-Medium {
+  font-family: "Inter-Medium";
+}
+
+.Inter-Bold {
+  font-family: "Inter-Bold";
+}
+
+@mixin global-colors($color) {
+  background-color: $color;
+  color: $color;
+}
+.font-inter {
+  font-family: Inter !important;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+* {
+  font-family: Inter;
+}
+
+.mtx-gray {
+  @include global-colors(#111827);
+} /*default color - gray*/
+.mtx-gray-50 {
+  @include global-colors(#f9fafb);
+}
+.mtx-gray-100 {
+  @include global-colors(#f3f4f6);
+}
+.mtx-gray-200 {
+  @include global-colors(#e5e7eb);
+}
+.mtx-gray-300 {
+  @include global-colors(#d1d5db);
+}
+.mtx-gray-400 {
+  @include global-colors(#9ca3af);
+}
+.mtx-gray-500 {
+  @include global-colors(#6b7280);
+}
+.mtx-gray-600 {
+  @include global-colors(#4b5563);
+}
+.mtx-gray-700 {
+  @include global-colors(#374151);
+}
+.mtx-gray-800 {
+  @include global-colors(#1f2937);
+}
+.mtx-gray-900 {
+  @include global-colors(#111827);
+}
+
+.mtx-purple {
+  @include global-colors(#6940a5);
+} /*default color - purple */
+.mtx-purple-50 {
+  @include global-colors(#f9f7fd);
+}
+.mtx-purple-100 {
+  @include global-colors(#f1ecfb);
+}
+.mtx-purple-200 {
+  @include global-colors(#e6ddf7);
+}
+.mtx-purple-300 {
+  @include global-colors(#d2c2f0);
+}
+.mtx-purple-400 {
+  @include global-colors(#b69be5);
+}
+.mtx-purple-500 {
+  @include global-colors(#9a74d8);
+}
+.mtx-purple-600 {
+  @include global-colors(#8256c7);
+}
+.mtx-purple-700 {
+  @include global-colors(#6940a5);
+}
+.mtx-purple-800 {
+  @include global-colors(#5e3b8e);
+}
+.mtx-purple-900 {
+  @include global-colors(#4e3172);
+}
+
+.mtx-blue {
+  @include global-colors(#0b6e99);
+} /*default color - blue */
+.mtx-blue-50 {
+  @include global-colors(#f1fafe);
+}
+.mtx-blue-100 {
+  @include global-colors(#e2f3fc);
+}
+.mtx-blue-200 {
+  @include global-colors(#bde8fa);
+}
+.mtx-blue-300 {
+  @include global-colors(#83d7f6);
+}
+.mtx-blue-400 {
+  @include global-colors(#42c2ee);
+}
+.mtx-blue-500 {
+  @include global-colors(#19abde);
+}
+.mtx-blue-600 {
+  @include global-colors(#0c8abd);
+}
+.mtx-blue-700 {
+  @include global-colors(#0b6e99);
+}
+.mtx-blue-800 {
+  @include global-colors(#0d5d7f);
+}
+.mtx-blue-900 {
+  @include global-colors(#114e69);
+}
+
+/* ---------------------------------------TEXT TYPOGRAPHY------------------------------------------------ */
+
+$font-weight: 400;
+
+@mixin mtx-heading($size, $line-height) {
+  font-weight: $font-weight;
+  font-size: $size;
+  line-height: $line-height;
+}
+
+.mtx-h1 {
+  @include mtx-heading(3.75rem, 4.5rem);
+}
+.mtx-h2 {
+  @include mtx-heading(3rem, 3.75rem);
+}
+.mtx-h3 {
+  @include mtx-heading(2.25rem, 2.75rem);
+}
+.mtx-h4 {
+  @include mtx-heading(1.875rem, 2.25rem);
+}
+.mtx-h5 {
+  @include mtx-heading(1.5rem, 2rem);
+}
+.mtx-h6 {
+  font-weight: 600;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+.mtx-subtitle1 {
+  @include mtx-heading(1rem, 1.5rem);
+}
+.mtx-subtitle2 {
+  font-weight: 600;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.mtx-body1 {
+  @include mtx-heading(1rem, 1.5rem);
+}
+.mtx-body2 {
+  @include mtx-heading(0.875rem, 1.25rem);
+}
+.mtx-label {
+  @include mtx-heading(0.8rem, 1.2rem);
+}
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+// .scrollbar-hide::-webkit-scrollbar {
+//   display: none;
+// }
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.react-calendar .selected-date {
+  background-color: #f2f4f7;
+  color: #344054;
+  width: 40px;
+  height: 40px;
+}
+
+.react-calendar__tile--active:hover {
+  background-color: #f3f4f6 !important;
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  color: #344054; /* Hover effect background color */
+}
+
+.react-calendar .weekend {
+  color: gray; /* Customize the weekend text color */
+}
+
+/* Remove the underline under days of the week */
+.react-calendar__month-view__weekdays__weekday abbr[title] {
+  text-decoration: none !important;
+}
+
+.react-calendar {
+  padding: 2px;
+  border: 0.5px solid #e4e7ec !important; /* Customize the weekend text color */
+  width: auto !important;
+  box-shadow: none !important;
+}
+.calendar-container {
+  border: 0.5px solid #e4e7ec; /* Your default border color */
+}
+.react-calendar__navigation__label__labelText {
+  color: #344054;
+  font-weight: 500 !important;
+}
+.react-calendar__tile--active,
+.react-calendar__tile--now {
+  background-color: #f2f4f7 !important;
+}
+
+/* ---------------------------------------SCROLLBAR STYLES------------------------------------------------ */
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #b3b3b3;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #8c8c8c;
+}
+
+/*--------------------------------------widget in pre recorded video-------------------------------------------- */
+.container input:checked ~ .checkmark {
+  background-color: #4BB730 !important;
+border-color: #4BB730 !important;
+}
+.container .checkmark:after {
+  border-color: white !important ;
+  left: 7px !important;
+}
+
+.slick-prev{
+  left: -42px !important;
+}
+.slick-next{
+  right: -42px !important;
+}
+
+.slick-prev, .slick-next {
+  background-color: white !important;
+  border: 1px solid #D0D5DD !important;
+  width: 40px !important;
+  border-radius: 100%;
+  height: 40px !important;
+  
+}
+.slick-prev:before{
+  content: url('/images/ai/leftarrow.svg') !important;
+  font-size: 30px !important;
+  line-height: 0 !important;
+}
+.slick-next:before{
+  content: url('/images/ai/rightarrow.svg') !important;
+  font-size: 30px !important;
+  line-height: 0 !important;
+}

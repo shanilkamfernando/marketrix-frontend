@@ -1,0 +1,60 @@
+/* datepicker-styles.css */
+
+/* Example styles for the calendar */
+.react-datepicker {
+  font-style: normal;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  padding: 2px;
+}
+
+.react-datepicker__header {
+  background-color: white;
+  color: white;
+  border: none;
+}
+
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  color: #080606;
+}
+.react-datepicker__day-name {
+  padding-top: 20%;
+}
+.react-datepicker__day--selected {
+  background-color: #7f56d9;
+  color: white;
+  border-radius: 50%;
+}
+
+/* Hover effect on non-selected days */
+.react-datepicker__day:not(.react-datepicker__day--selected):hover {
+  background-color: #aeb7c3;
+  color: white;
+  border-radius: 50%;
+}
+
+/* Selected day styles */
+.react-datepicker__day--selected,
+.react-datepicker__day--select,
+.react-datepicker__day--hover,
+.react-datepicker__day--keyboard-selected {
+  background-color: #7f56d9;
+  color: white;
+  border-radius: 50%;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: #7f56d9;
+  color: white;
+  border-radius: 50%;
+}
+
+/* Add more styles as needed */
+.react-datepicker__triangle {
+  display: none;
+}

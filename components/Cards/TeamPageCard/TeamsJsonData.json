@@ -1,0 +1,81 @@
+{
+  "teamMembers": [
+    {
+      "avatarImage": "../../../images/profile3.png",
+      "name": "shanilka",
+      "email": "shanilka@gmail.com",
+      "ratings": "4.0 / 5.0",
+      "completedSessions": "60",
+      "resolutionTime": "02:00",
+      "statusBadgeBgColor": "#ECFDF3",
+      "statusBadgeTextColor": "#027A48",
+      "statusBadgeText": "Online"
+    },
+    {
+      "avatarImage": "../../../images/profile3.png",
+      "name": "Ajith",
+      "email": "Ajith@gmail.com",
+      "ratings": "4.4 / 5.0",
+      "completedSessions": "20",
+      "resolutionTime": "01:24",
+      "statusBadgeBgColor": "#ECFDF3",
+      "statusBadgeTextColor": "#027A48",
+      "statusBadgeText": "Online"
+    },
+    {
+      "avatarImage": "../../../images/profile3.png",
+      "name": "Aiyash",
+      "email": "Aiyash@gmail.com",
+      "ratings": "3.4 / 5.0",
+      "completedSessions": "70",
+      "resolutionTime": "02:64",
+      "statusBadgeBgColor": "#ECFDF3",
+      "statusBadgeTextColor": "#027A48",
+      "statusBadgeText": "Online"
+    },
+    {
+      "avatarImage": "../../../images/profile3.png",
+      "name": "Sandini",
+      "email": "Sandini@gmail.com",
+      "ratings": "4.2 / 5.0",
+      "completedSessions": "30",
+      "resolutionTime": "00:64",
+      "statusBadgeBgColor": "#ECFDF3",
+      "statusBadgeTextColor": "#027A48",
+      "statusBadgeText": "Online"
+    },
+    {
+      "avatarImage": "../../../images/profile3.png",
+      "name": "sajeevan",
+      "email": "sajeevan123@gmail.com",
+      "ratings": "4.4 / 5.0",
+      "completedSessions": "60",
+      "resolutionTime": "07:64",
+      "statusBadgeBgColor": "#ECFDF3",
+      "statusBadgeTextColor": "#027A48",
+      "statusBadgeText": "Online"
+    },
+    {
+      "avatarImage": "../../../images/profile3.png",
+      "name": "sajeevan",
+      "email": "sajeevan123@gmail.com",
+      "ratings": "4.4 / 5.0",
+      "completedSessions": "60",
+      "resolutionTime": "07:64",
+      "statusBadgeBgColor": "#ECFDF3",
+      "statusBadgeTextColor": "#027A48",
+      "statusBadgeText": "Online"
+    },
+    {
+      "avatarImage": "../../../images/profile3.png",
+      "name": "Akila",
+      "email": "Akila3@gmail.com",
+      "ratings": "4.4 / 5.0",
+      "completedSessions": "60",
+      "resolutionTime": "07:64",
+      "statusBadgeBgColor": "#ECFDF3",
+      "statusBadgeTextColor": "#027A48",
+      "statusBadgeText": "Online"
+    }
+  ]
+}
